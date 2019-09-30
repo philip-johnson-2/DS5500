@@ -53,7 +53,7 @@ Patient Diseases
     - Asthma Indicator
     - Diabetes Indicator
     
-##Approach and Methods
+## Approach and Methods
 
 We plan to create a “profile” data point for each patient based on the 
 data sources above. This profile will encompass various features from 
