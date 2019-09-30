@@ -71,3 +71,10 @@ Technology:
 - Model Prep 
 - Feature Selection 
 - ML Packages (python)
+
+## Preliminary Results
+We are currently working with Decision Point to procure a sampling of 
+the data from their data warehouses. At this time we have confirmed the
+above data points listed under datasources exist will be made available
+to us. We will update with further results once we have accessed the
+sample that we will be provided.
