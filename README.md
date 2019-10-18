@@ -9,9 +9,7 @@ admissions and that we see greater improvement in model accuracy for
 short term predictions.
 
 ## Data Source
-Decision Point will provide data from their data warehouse that
-will be wiped of all PHI in accordance with HIPPA standards.
-This will include historical data from health insurance companies
+We were able to secure historical data from health insurance companies
 that provides information tracked by the insurance company to
 track payments for services rendered to patients, medication
 prescriptions, and other relevant information pertaining to
