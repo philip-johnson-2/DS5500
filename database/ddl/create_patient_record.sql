@@ -7,13 +7,17 @@ DROP TABLE patient_record
 GO
 
 CREATE patient_record (
-    patient_id INT
+    as_of_date DATE
+    , patient_id INT
     
     --diseases 
-
+    , patient_asthma_indicator INT
     --events
+    , patient_prior_admission INT
 
     --medications
 
-    
+
+    -- dv
+
 )
