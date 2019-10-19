@@ -5,10 +5,10 @@ DROP TABLE patient_demographics
 GO
 
 CREATE TABLE patient_demographics (
-    , as_of_date DATE
+     as_of_date DATE
     , patient_id INT
     , age INT
-    , race VARCHAR(25)
+    , race VARCHAR(35)
     , language VARCHAR(55)
     , gender VARCHAR(25)
 )
