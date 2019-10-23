@@ -3,10 +3,10 @@
     all features for each patient that will 
     be leveraged for modeling
 */
-DROP TABLE patient_record 
+DROP TABLE dbo.patient_record 
 GO
 
-CREATE patient_record (
+CREATE dbo.patient_record (
     as_of_date DATE
     , patient_id INT
     
@@ -20,4 +20,4 @@ CREATE patient_record (
 
     -- dv
 
-)
+);
