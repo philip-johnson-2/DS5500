@@ -7,7 +7,7 @@ CREATE TABLE dbo.patient_demographics (
     as_of_date DATE
     , patient_id INT
     , age INT
-    , race VARCHAR(35)
+    , race VARCHAR(125)
     , language VARCHAR(55)
     , gender VARCHAR(25)
 );
