@@ -50,23 +50,23 @@ SET patient_medication_ace_inhibitor = a.patient_medication_ace_inhibitor
     , patient_medication_potentially_harmful = a.patient_medication_potentially_harmful
 FROM dbo.patient_record r
 LEFT JOIN (
-    SELECT md.patient_id
-        , MAX(CASE WHEN dm.medication_list = 'ACE Inhibitor/ARB Medications') patient_medication_ace_inhibitor 
-        , MAX(CASE WHEN dm.medication_list = 'Antibiotics of Concern by NCQA Drug Class Medications') patient_medication_antiboitic_of_concern 
-        , MAX(CASE WHEN dm.medication_list  'Antidepressant Medications') patient_medication_serious_bh 
-        , MAX(CASE WHEN dm.medication_list IN '') patient_medication_asthma 
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_diabetes
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_dimentia
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_statin
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_high_risk
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_opioid
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_substance_abuse
-        , MAX(CASE WHEN dm.medication_list = '') patient_medication_potentially_harmful
+    SELECT m.patient_id
+        , MAX(CASE WHEN dm.medication_class_id = 3 THEN 1 ELSE 0 END) patient_medication_ace_inhibitor 
+        , MAX(CASE WHEN dm.medication_class_id = 6 THEN 1 ELSE 0 END) patient_medication_antiboitic_of_concern 
+        , MAX(CASE WHEN dm.medication_class_id IN (7,8,9) THEN 1 ELSE 0 END) patient_medication_serious_bh 
+        , MAX(CASE WHEN dm.medication_class_id IN (11,12) THEN 1 ELSE 0 END) patient_medication_asthma 
+        , MAX(CASE WHEN dm.medication_class_id = 21 THEN 1 ELSE 0 END) patient_medication_diabetes
+        , MAX(CASE WHEN dm.medication_class_id = 20 THEN 1 ELSE 0 END) patient_medication_dimentia
+        , MAX(CASE WHEN dm.medication_class_id = 24 THEN 1 ELSE 0 END) patient_medication_statin
+        , MAX(CASE WHEN dm.medication_class_id = 25 THEN 1 ELSE 0 END) patient_medication_high_risk
+        , MAX(CASE WHEN dm.medication_class_id = 33 THEN 1 ELSE 0 END) patient_medication_opioid
+        , MAX(CASE WHEN dm.medication_class_id IN (31,32) THEN 1 ELSE 0 END) patient_medication_substance_abuse
+        , MAX(CASE WHEN dm.medication_class_id IN (37,38,39) THEN 1 ELSE 0 END) patient_medication_potentially_harmful
     FROM dbo.patient_medications m
     LEFT JOIN dbo.hedis_drug_mappings dm
-        ON dm.ndc_code = m.ndc_code
-    GROUP BY md.patient_id
-	) a ON r.patient_id = a.patient_id;
+        ON dm.ndc_code = CAST (m.ndc_code AS BIGINT)
+    GROUP BY m.patient_id
+	) a ON r.patient_id = a.patient_id
 
 
 
