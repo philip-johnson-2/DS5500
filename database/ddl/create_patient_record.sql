@@ -91,19 +91,19 @@ CREATE TABLE dbo.patient_record (
     , patient_prior_admission INT
 
     --medications
-    , patient_prior_12_month_medication_count
-    , patient_prior_6_month_medication_count
-    , patient_medication_ace_inhibitor
-    , patient_medication_antiboitic_of_concern
-    , patient_medication_serious_bh
-    , patient_medication_asthma
-    , patient_medication_diabetes
-    , patient_medication_dimentia
-    , patient_medication_statin
-    , patient_medication_high_risk
-    , patient_medication_opioid
-    , patient_medication_substance_abuse
-    , patient_medication_potentially_harmful
+    , patient_prior_12_month_medication_count INT
+    , patient_prior_6_month_medication_count INT
+    , patient_medication_ace_inhibitor INT
+    , patient_medication_antiboitic_of_concern INT
+    , patient_medication_serious_bh INT
+    , patient_medication_asthma INT
+    , patient_medication_diabetes INT
+    , patient_medication_dimentia INT
+    , patient_medication_statin INT
+    , patient_medication_high_risk INT
+    , patient_medication_opioid INT
+    , patient_medication_substance_abuse INT
+    , patient_medication_potentially_harmful INT
 
     -- dv
 

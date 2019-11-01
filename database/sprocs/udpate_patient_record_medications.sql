@@ -19,9 +19,10 @@ FROM dbo.patient_record r
 LEFT JOIN (
     SELECT m.patient_id
         , COUNT(DISTINCT m.ndc_code)
-    FROM dbo.medications m
-    WHERE m.fill_date BETWEEN XXX AND XXX
-) a ON a.patient_id = r.patient_id
+    FROM dbo.patient_medications m
+    WHERE m.fill_date BETWEEN '2024-06-30' AND '2025-06-30'
+    GROUP BY m.patient_id
+) a ON a.patient_id = r.patient_id;
 
 -- update patient medication counts
 UPDATE dbo.patient_record
@@ -30,9 +31,10 @@ FROM dbo.patient_record r
 LEFT JOIN (
     SELECT m.patient_id
         , COUNT(DISTINCT m.ndc_code)
-    FROM dbo.medications m
-    WHERE m.fill_date BETWEEN XXX AND XXX
-) a ON a.patient_id = r.patient_id
+    FROM dbo.patient_medications m
+    WHERE m.fill_date BETWEEN '2025-01-01' AND '2025-06-30'
+    GROUP BY m.patient_id
+) a ON a.patient_id = r.patient_id;
 
 
 -- update patient medication types
@@ -66,12 +68,13 @@ LEFT JOIN (
     LEFT JOIN dbo.hedis_drug_mappings dm
         ON dm.ndc_code = CAST (m.ndc_code AS BIGINT)
     GROUP BY m.patient_id
-	) a ON r.patient_id = a.patient_id
+	) a ON r.patient_id = a.patient_id;
 
 
 
 END
 $$
+
 
 
 
