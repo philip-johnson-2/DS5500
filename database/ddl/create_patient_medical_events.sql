@@ -1,10 +1,9 @@
 /*
     Create patient medical events
 */
-DROP TABLE patient_medical_events
-GO
+DROP TABLE dbo.patient_medical_events;
 
-CREATE TABLE patient_medical_events (
+CREATE TABLE dbo.patient_medical_events (
     patient_id INT
     , event_date DATE
     , event_name VARCHAR(125)
@@ -14,6 +13,5 @@ CREATE TABLE patient_medical_events (
     , dx_name VARCHAR(255)
     , lama_indicator INT
     , discharge_status VARCHAR(500)
-)
 
-CREATE INDEX idx_patient_medical_events_patient_id ON patient_medical_events (patient_id)
+CREATE INDEX idx_patient_medical_events_patient_id ON dbo.patient_medical_events (patient_id)

@@ -50,7 +50,7 @@ Patient Diseases
 - Example feature development:
     - Asthma Indicator
     - Diabetes Indicator
-    
+
 ## Approach and Methods
 
 We plan to create a “profile” data point for each patient based on the 
@@ -70,9 +70,17 @@ Technology:
 - Feature Selection 
 - ML Packages (python)
 
-## Preliminary Results
+## Results
 We are currently working on pulling the data together from the 
 different data sources. At this time we have confirmed the
 above data points listed under datasources exist will be made available
 to us. We will update with further results once we have accessed the
 sample that we will be provided.
+
+## Discussion
+
+## Contributions
+
+## References
+
+## Appendix
