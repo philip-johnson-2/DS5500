@@ -144,12 +144,18 @@ FROM (
 			, r.language as patient_language
 			, r.gender as patient_gender
 			, r.age as patient_age
-			, e.prev_admission
-			, e.prev_admission_12mo
-			, e.prev_admission_6mo
-			, e.prev_admission_3mo
-			, e.prev_admission_1mo
-			, e.prev_admission_idx
+            , e.prev_admission_12mo
+            , e.prev_admission_6mo
+            , e.prev_admission_3mo
+            , e.prev_admission_1mo
+            , e.prev_er_12mo
+            , e.prev_er_6mo
+            , e.prev_er_3mo
+            , e.prev_er_1mo
+            , e.prev_pcp_12mo
+            , e.prev_pcp_6mo
+            , e.prev_pcp_3mo
+            , e.prev_pcp_1mo
 			, e.fut_admission_12mo
 			, e.fut_admission_6mo
 			, e.fut_admission_3mo
