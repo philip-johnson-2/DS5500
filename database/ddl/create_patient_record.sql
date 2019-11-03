@@ -7,16 +7,11 @@ DROP TABLE dbo.patient_record;
 
 CREATE TABLE dbo.patient_record (
     as_of_date DATE
-
-    -- demographics
     , patient_id INT
     , patient_race VARCHAR(55)
     , patient_language VARCHAR(55)
     , patient_gender VARCHAR(55)
     , patient_age INT
-
-    -- diseases 
-    , patient_asthma_indicator INT
     , patient_disease_add INT
     , patient_disease_alcohol INT
     , patient_disease_ami INT
@@ -86,11 +81,6 @@ CREATE TABLE dbo.patient_record (
     , patient_disease_tracheostomy INT
     , patient_disease_transplant INT
     , patient_disease_uri INT
-    
-    --events
-    , patient_prior_admission INT
-
-    --medications
     , patient_prior_12_month_medication_count INT
     , patient_prior_6_month_medication_count INT
     , patient_medication_ace_inhibitor INT
@@ -104,8 +94,16 @@ CREATE TABLE dbo.patient_record (
     , patient_medication_opioid INT
     , patient_medication_substance_abuse INT
     , patient_medication_potentially_harmful INT
-
-    -- dv
+     , prev_admission INT
+     , prev_admission_12mo INT
+     , prev_admission_6mo INT
+     , prev_admission_3mo INT
+     , prev_admission_1mo INT
+     , prev_admission_idx INT
+     , fut_admission_12mo INT
+     , fut_admission_6mo INT
+     , fut_admission_3mo INT
+     , fut_admission_1mo INT
 
 );
 
