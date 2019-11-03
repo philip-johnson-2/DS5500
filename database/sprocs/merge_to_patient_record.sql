@@ -87,12 +87,18 @@ SELECT '2025-06-30'
 	, r.patient_medication_opioid
 	, r.patient_medication_substance_abuse
 	, r.patient_medication_potentially_harmful
-	, r.prev_admission
 	, r.prev_admission_12mo
 	, r.prev_admission_6mo
 	, r.prev_admission_3mo
 	, r.prev_admission_1mo
-	, r.prev_admission_idx
+    , r.prev_er_12mo 
+    , r.prev_er_6mo 
+    , r.prev_er_3mo 
+    , r.prev_er_1mo 
+    , r.prev_pcp_12mo 
+    , r.prev_pcp_6mo 
+    , r.prev_pcp_3mo 
+    , r.prev_pcp_1mo 
 	, r.fut_admission_12mo
 	, r.fut_admission_6mo
 	, r.fut_admission_3mo
@@ -116,12 +122,18 @@ FROM (
 		, m.patient_medication_opioid
 		, m.patient_medication_substance_abuse
 		, m.patient_medication_potentially_harmful
-		, r.prev_admission
 		, r.prev_admission_12mo
 		, r.prev_admission_6mo
 		, r.prev_admission_3mo
 		, r.prev_admission_1mo
-		, r.prev_admission_idx
+		, r.prev_er_12mo 
+		, r.prev_er_6mo 
+		, r.prev_er_3mo 
+		, r.prev_er_1mo 
+		, r.prev_pcp_12mo 
+		, r.prev_pcp_6mo 
+		, r.prev_pcp_3mo 
+		, r.prev_pcp_1mo 
 		, r.fut_admission_12mo
 		, r.fut_admission_6mo
 		, r.fut_admission_3mo
