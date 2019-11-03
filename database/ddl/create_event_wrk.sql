@@ -1,7 +1,6 @@
 CREATE TABLE event_wrk
 (
  patient_id INT,
- prev_admission INT,
  prev_admission_12mo INT,
  prev_admission_6mo INT,
  prev_admission_3mo INT,
