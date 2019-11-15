@@ -37,10 +37,10 @@ select patient_id,
 	MAX(case when event_name = 'PCP Visit' AND event_date between '2025-03-30' and '2025-06-30' then 1 else 0 end),
 	MAX(case when event_name = 'PCP Visit' AND event_date between '2025-05-30' and '2025-06-30' then 1 else 0 end),
 	-- future admissions
-	MAX(case when event_name = 'Admission' AND event_date between '2025-06-30' and '2026-06-30' then 1 else 0 end),
-	MAX(case when event_name = 'Admission' AND event_date between '2025-06-30' and '2025-12-31' then 1 else 0 end),
-	MAX(case when event_name = 'Admission' AND event_date between '2025-06-30' and '2025-09-30' then 1 else 0 end),
-	MAX(case when event_name = 'Admission' AND event_date between '2025-06-30' and '2025-07-30' then 1 else 0 end)	
+	MAX(case when event_name = 'Admission (Avoidable)' AND event_date between '2025-06-30' and '2026-06-30' then 1 else 0 end),
+	MAX(case when event_name = 'Admission (Avoidable)' AND event_date between '2025-06-30' and '2025-12-31' then 1 else 0 end),
+	MAX(case when event_name = 'Admission (Avoidable' AND event_date between '2025-06-30' and '2025-09-30' then 1 else 0 end),
+	MAX(case when event_name = 'Admission (Avoidable)' AND event_date between '2025-06-30' and '2025-07-30' then 1 else 0 end)	
 from patient_medical_events
 group by patient_id;
 
