@@ -106,11 +106,16 @@ CREATE TABLE dbo.patient_record (
     , prev_pcp_6mo INT
     , prev_pcp_3mo INT
     , prev_pcp_1mo INT
+    , months_since_last_admission INT
+    , months_since_last_er INT
+    , months_since_last_pcp_visit INT
+    , prior_admission_count INT
+    , prior_er_count INT
+    , prior_pcp_visit_count INT
     , fut_admission_12mo INT
     , fut_admission_6mo INT
     , fut_admission_3mo INT
     , fut_admission_1mo INT
-
 );
 
 
