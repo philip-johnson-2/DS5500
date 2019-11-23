@@ -162,8 +162,11 @@ FROM (
 			, e.fut_admission_1mo
 		FROM patient_demographics r
 		LEFT JOIN event_wrk e
-		on e.patient_id = r.patient_id
+			on e.patient_id = r.patient_id
 	) r LEFT JOIN medication_wrk m
 	ON r.patient_id = m.patient_id
-) r LEFT JOIN disease_wrk d
-ON r.patient_id = d.patient_id
+) r 
+LEFT JOIN disease_wrk d
+	ON r.patient_id = d.patient_id
+LEFT JOIN event_recency r2
+	ON r2.patient_id = r.patient_id
