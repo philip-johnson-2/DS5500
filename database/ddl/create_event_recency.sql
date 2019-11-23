@@ -9,29 +9,30 @@ CREATE TABLE event_recency (
 )
 
 INSERT INTO event_recency
-SELECT patient_id
-    , MAX(CASE WHEN event_name = 'Admission' THEN DATEDIFF(MM,a.last_event,'2025-06-30') ELSE 0 END) months_since_last_admission
-    , MAX(CASE WHEN event_name = 'ED Visit' THEN DATEDIFF(MM,a.last_event,'2025-06-30') ELSE 0 END) months_since_last_er
-    , MAX(CASE WHEN event_name = 'PCP Visit' THEN DATEDIFF(MM,a.last_event,'2025-06-30') ELSE 0 END) months_since_last_pcp_visit
-    , MAX(CASE WHEN event_name = 'Admission' THEN b.event_count ELSE 0 END) prior_admission_count
-    , MAX(CASE WHEN event_name = 'ED Visit' THEN b.event_count ELSE 0 END) prior_er_count
-    , MAX(CASE WHEN event_name = 'PCP Visit' THEN b.event_count ELSE 0 END) prior_pcp_visit_count
+SELECT d.patient_id
+    , MIN(CASE WHEN a.event_name = 'Admission' THEN (DATE_PART('year', '2025-06-30'::date) - DATE_PART('year', a.last_event::date)) * 12 + DATE_PART('month', '2025-06-30'::date) - DATE_PART('month', a.last_event::date) ELSE 13 END) months_since_last_admission
+    , MIN(CASE WHEN a.event_name = 'ED Visit' THEN (DATE_PART('year', '2025-06-30'::date) - DATE_PART('year', a.last_event::date)) * 12 + DATE_PART('month', '2025-06-30'::date) - DATE_PART('month', a.last_event::date) ELSE 13 END) months_since_last_er
+    , MIN(CASE WHEN a.event_name = 'PCP Visit' THEN (DATE_PART('year', '2025-06-30'::date) - DATE_PART('year', a.last_event::date)) * 12 + DATE_PART('month', '2025-06-30'::date) - DATE_PART('month', a.last_event::date) ELSE 13 END) months_since_last_pcp_visit
+    , MAX(CASE WHEN a.event_name = 'Admission' THEN b.event_count ELSE 0 END) prior_admission_count
+    , MAX(CASE WHEN a.event_name = 'ED Visit' THEN b.event_count ELSE 0 END) prior_er_count
+    , MAX(CASE WHEN a.event_name = 'PCP Visit' THEN b.event_count ELSE 0 END) prior_pcp_visit_count
 FROM patient_demographics d
 LEFT JOIN (
-    SELECT patient_id
+    SELECT p.patient_id
         , event_name
-        , MAX(start_date) last_event
-    FROM patient_medical_events
-    WHERE start_date < '2025-06-30'
-    GROUP BY patient_id
+        , MAX(event_date) last_event
+    FROM patient_medical_events p
+    WHERE event_date < '2025-06-30'
+    GROUP BY p.patient_id
         , event_name
-) a ON a.patient_id = d.member_id
+) a ON a.patient_id = d.patient_id
 LEFT JOIN (
-    SELECT patient_id
+    SELECT p.patient_id
         , event_name
         , COUNT(*) event_count
-    FROM patient_medical_events
-    WHERE start_date < '2025-06-30'
-    GROUP BY patient_id
+    FROM patient_medical_events p
+    WHERE event_date < '2025-06-30'
+    GROUP BY p.patient_id
         , event_name
 ) b ON b.patient_id = d.patient_id
+GROUP BY d.patient_id
