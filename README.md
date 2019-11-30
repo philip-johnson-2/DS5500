@@ -1,11 +1,17 @@
 # Improving Hospital Inpatient Admissions Predictions Leveraging Temporal Relationships
 
 
+## Background
+
+Discuss the backrgound of the project and the resulting data.
+
+Business case for the problem
+
 ## Goals and Outcomes
 
 Can we prove that temporal relationships in a medical patients history improves the ability to predict future hospital admissions? In this project we analyze a health insurance dataset on patient outcomes to try to predict future hospital admissions. We will be looking specifically into the temporal nature of some of the features we pull into the dataset, and specifically at if we can improve model outcomes when incorporating more temporal features.
 
-## Summary
+## Summary of Results
 
 Overall we found reasonable evidence that adding temporal features to a previously non-temporal data set can help improve modeling outcomes of admission predictions. We looked at several time frames for features within the training data, as well as several timeframes for the response variable of "readmitted to hospital within x months". The timeframes we used were 12, 6, 3, and 1 months. We then compared this to the non-temporal version of the model dataset, containing only one of the flags for the feature variables, being the 12 month timeframe feature variables. We found that especially for the prediction of outcomes over a shorter timespan (1 or 3 months), there is strong evidence to suggest that adding in multiple features to create a dataset with temporal characteristics resulted in improved outcomes for the model over a range of measurements. We found model accuracy and AUC scores to be improved in models across all timeframes. We also found these improved differences to be statistically significant at the .05 level when predicting admission within 1 or 3 months. Moving forward with the project, for the second half of the semester, we have a number of outlets to continue exploring. These include: maximizing model accuracy/other scores, exploring the temporal nature of other features not yet analyzed, predicting specifically for preventable hospital admissions, and modeling specifically for the highest risk patients as this is the most pressing business case.
 
@@ -85,25 +91,6 @@ This data source was structured on a per disease per patient basis. This data wa
 
 ## Approach and Methods
 
-We plan to create a “profile” data point for each patient based on the 
-data sources above. This profile will encompass various features from 
-the above data that are used in current Decision Point models. 
-Part of the profile for each patient will include time related features 
-which will be the focus of our attempted improvement over Decision Point’s 
-current models. From there we plan to create a predictive model for 
-whether or not the patient will have a hospital stay within a set of 
-timeframes (6-month, 1 year, etc.). We plan to use benchmark statistics 
-from Decision Point to compare our model against current models with the 
-goal of creating a new model with higher accuracy.
-
-Technology:
-- Database (postgreSQL, MySQL)
-- Model Prep 
-- Feature Selection 
-- ML Packages (python)
-
-## Results
-
 
 Datasets for Analysis
 For the analysis portion of the project, we reduced the data as described above into lists of observations of patient records. However, our intention is to analyze the effects of adding temporal features to the observations rather than using simple indicator variables. Because of this, we have created two datasets of these observations described above.
@@ -117,7 +104,6 @@ Temporal
 The temporal dataset contains all of the same features as the non-temporal dataset, but also includes indicator variables for medical events over 6, 3, and 1 month periods. This means that medical events are encoded in 4 variables per event type rather than just 1 indicator variable.
 
 
-
 Feature Importance Analysis
 
 As an initial look at the various time based features and their effects on any modeling that is done, we ran an initial feature importance test on the temporal features within the temporal dataset. We sorted the variables in descending order of importance with the most important features being first and the least important being last. The importance scores that we used to rank the features were pulled from a binary tree classification model. Scores were given for all features within the dataset, but we ranked only the temporal features, any only looked at features which ranked inside the top 6 temporal features. A table summarizing the results is below.
@@ -128,12 +114,28 @@ The above table shows that there is a case for the importance of the additional 
 One additional observation from the above table is that the shorter term features seem to become more important as the time range of the response variable becomes shorter. The 3 and 1 month features are more important for predicting 3 and 1 month admission, based on the model used to generate this table. This suggests that the temporal nature of these features may be more beneficial as the prediction period shortens.
 
 
+Sampling Method: How we accounted for a biased outcome predictor.
+
+
+Model Development:
+
+
+
+## Results
+
+
+Feature Importance Results:
+
+Model Results:
+
+
+
 ## Discussion
+
+Discuss the use case of leveraging the features developed and the output of the models for the use of care management for improving patient outcomes
+
 
 ## Contributions
 
-oth members of the group contributed equally to the project thus far. Phil Johnson has acted as the point of contact between the group and the interested company, as well as contributed to the data modeling and transformation pieces. Nick Tyler has also contributed during the data transformation steps in addition to the modeling. Both members contributed equally to the report.
+Both members of the group contributed equally to the project thus far. Phil Johnson has acted as the point of contact between the group and the interested company, as well as contributed to the data modeling and transformation pieces. Nick Tyler has also contributed during the data transformation steps in addition to the modeling. Both members contributed equally to the report.
 
-## References
-
-## Appendix
