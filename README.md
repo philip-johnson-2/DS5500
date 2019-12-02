@@ -178,17 +178,27 @@ Below are ROC plots, one for each of the four response variable timeframes. Whil
 
 #### ROC
 
+The chart below shows the ROC curves acfoss all four algorithms used for predicting 6 months hospital admissions. The results are fairly consistent with Gradient Boosting and Logistic Regression slightly outperforming the other models. The key shows the AUC achieved for each model, with the best performing models achieving an AUC of .84 - which is actually a bit better than expected. 
+
 ![Screenshot](roc_results.png)
 
 #### Precision Recall
 
+The Precision Recall curve below shows a similar curve for Logistic Regression and Gradient Boosting where Gradient Boosting slightly outperforms logistic regression. For Gradient Boosting and Logistic Regression, their does not appear to be much a bias towards precision or recall but a fairly linear relationship between the two. Their could be some future performacne tuning to be made where we would want to bias the models slightly towards recall as it is important to improve the total relevant results correctly classified by our algorithm
+
 ![Screenshot](precision_recall_results.png)
 
-#### Lift
+#### Rate 10, Converage, and Lift
+
+For the following metrics, we bin the testing data in 10 equal sized bins ordering by the predicted probablity value of an admission creating a bin for each 10% of the population. We then focus on the top bin (top 10% at risk patients) to calaculate the metrics below. These are nice metrics for this type of problem given the biased nature of the outcome as well as th fact that healthcare providers only have the ability to target limited number of patients. 
+
+Rate 10 describes the average number of admissions within the 10% of high risk patients: 25%
+
+Coverage describes the percent of total admissions identified when looking at the top 10% of high risk patients: 45%
+
+Lift gives us a way to compare how well we do at predicting high risk patients as compared to the rest of the population. In this example, we are comparing average outcome actual of the top 10% of high risk patients to the average outcome of the entire population to identify how much 'lift' we get when using our model versus identifying patients at random. The average outcome rate of the top 10% of patients (Rate 10) is 25% whereas the average outcome of the entire population is 5%. So targeting the top 10% of patients would yield a 1 in 5 chance of targeting a patient who will have a hosptial admisiosn versus on average 1 in 20 patients will have a hospital admission. In this case, we achieve a lift of 5x.
 
 ![Screenshot](lift_results.png)
-
-
 
 
 ## Discussion
