@@ -34,7 +34,7 @@ Historical information of what members were enrolled on the plan when tracks the
 - duration on plan type
 - insurance type
 - duration with primary care provider
-- eR visits
+- ER visits
 - inpatient admissions
 - readmissions
 - PCP visits
