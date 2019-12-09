@@ -111,6 +111,13 @@ The chart below shows the prevelance of common chronic conditions within the pop
 ![Screenshot](disease_prevelance.png)
 
 
+Model Data 
+
+In order to create the dataset for modeling, we merged all of the different datasets into a single record for a patient, creating a unqiue record per patient with each column being a developed feature. This process allowed us to send the data into the feature imporatnce algorithnm as well as the ML algos across multiple outcome types. The diagram below shows how we leveraged the different data sources to create a single patient record:
+
+![Screenshot](data_merge.png)
+
+
 ## Approach and Methods
 
 
