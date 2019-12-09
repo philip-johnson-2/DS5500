@@ -6,9 +6,9 @@ Authors: Nick Tyler, Philip Johnson
 
 ### Background
 
-In todays world their is now a vast amount of data collected in the healthcare industry after the introduction of electronic health records and the introduction and use of service payment systems that health insurers use to pay providers of care. At every point of care - from a primary care doctor visit to an ER visit to each medication presecription fill at the pharmacy - a data point is collected and stored in datawarehouses.  With the cost of data storage decreasing dramatically,we now have the ability to store all of this data for use in many different ways. 
+In todays world their is a vast amount of data collected in the healthcare industry after the introduction of electronic health records and the introduction and use of service payment systems that health insurers use to pay providers of care. At every point of care - from a primary care doctor visit to an ER visit to each medication presecription fill at the pharmacy - a data point is collected and stored in d datawarehouse.  With the cost of data storage decreasing dramatically, we now have the ability to store all of this data for use in many different ways. 
 
-Healthcare insurers and providers can leverage all of this data and predictive models to proactively identify patients that are likely going to need extra care so that they can praoctively reach out to these patients prior to getting sicker. The healthcare industry leverages these models to predict things like which patients are likely to end up needing the ER and which patients are likely going to progress in the conditions that they have.
+Healthcare insurers and providers can leverage all of this data and predictive models to proactively identify patients that are likely going to need extra care so that they can praoctively reach out to these patients prior to getting sicker. The healthcare industry leverages these models to predict things like which patients are likely to end up needing the ER and which patients are likely going to progress in severity of the conditions that they have.
 
 For our project, we were able to secure access to a Medicare based claims dataset to analyze and use to predict future hospital admissions. The dataset includes historical patient data that we can use to build features that look at prior history of patients to predict future outcomes. We sought out to leverage this data in differnet ways to try and improve predictive capabilities. Our first priority was to try and build features that would leverage this data in the best way to improve modeling. Because we had historical data, our first goal was to leverage the temporal nature of this data to build features that took into account recency of prior medical history in the hopes that features that account for this would improve models. By example, does a feature that describes that a patient had an ER visit in the last 6 months or a feature that descibes that the patient had an ER visit 2 months ago produce better results in modeling.
 
@@ -104,7 +104,11 @@ This data source was structured on a one line per medication per fill basis. Thi
 
 Disease Data
 
-This data source was structured on a per disease per patient basis. This data was collapsed down into a high number of one hot features indicating whether or not a patient had been diagnosed with a given disease. For the majority of patients this resulted in a sparse data set with only one or two features that were relevent to them.
+This data source was structured on a per disease per patient basis. This data was collapsed down into a high number of one hot features indicating whether or not a patient had been diagnosed with a given disease. For the majority of patients this resulted in a sparse data set with only one or two features that were relevent to them. 
+
+The chart below shows the prevelance of common chronic conditions within the population. Hypertension, diabetes and obesity are the most common conditions and these conditions tend to be high importance features in model development.
+
+![Screenshot](disease_prevelance.png)
 
 
 ## Approach and Methods
@@ -122,6 +126,17 @@ Temporal
 
 The temporal dataset contains all of the same features as the non-temporal dataset, but also includes indicator variables for medical events over 6, 3, and 1 month periods. This means that medical events are encoded in 4 variables per event type rather than just 1 indicator variable.
 
+Outcome Definition
+
+For this project, our outcome variable for predictions is future a avoidable admissions. An 'avoidable' admission is defined as an admission that was not pre-planned or random. Pre-planned events are things like planned surgeries and pregnancies. Random events are things like trauma related events or accidents. It is very important in distinguishing between these event types as it does not make business sense to try and predict random events and it is not possibnle to predict planned surgeries given the nature of the event. 
+
+The diagram below walks through an example patient timeline in which we can create fefatures from. We sbasically draw a line in time and call it the 'as of date' which becomes the point in which we base prior history on and future outcomes. In this example, our 'as of date' is January of 2018 - so historical features are constructed by looking at patient medical history prior to January 2018 and the outcome is based off of admissions that occured post January 2018. 
+
+We see that this patient would be a positive instance in the training dataset because the patient had an 'avoidable' admission after the defined 'as of date':
+
+
+![screenshot](patient_timeline.png)
+
 
 ### Feature Importance Analysis
 
@@ -135,9 +150,26 @@ One additional observation from the above table is that the shorter term feature
 
 
 
-### Sampling Method
+### Sampling Method and Data Exploration
 
-For each dataset, we originally used the complete dataset of 500k rows to build our models. However, due to the unbalanced nature of our response variables, our models performed quite poorly. We received high accuracy rates but had too high of a false positive rate relative to our true negative rate, showing the model was simply just predicting the most frequent value for the response variables. After this, we downsampled the number of "negative" samples to get a more balanced subset of the data. We sampled 30k records with a positive 12 month readmission rate, and 30k with a negative, resulting in 60k samples for modeling. From these 60k samples, we used 80% for training data, and 20% for testing data.
+For each dataset, we originally used the complete dataset of 500k rows to build our models. However, due to the unbalanced nature of our response variables, our models performed quite poorly. We received high accuracy rates but had too high of a false positive rate relative to our true negative rate, showing the model was simply just predicting the most frequent value for the response variables. 
+
+The diagram below shows how unbalanced the dataset was - for 12 month admissions we see an outcome rate of about 10% and for 6 month outcomes we see about a 5% outcome rate.
+
+![Screenshot](outcome_rates.png)
+
+
+Becuase of the high imbalance of the outcome variable, we downsampled the number of "negative" samples to get a more balanced subset of the data. We sampled 30k records with a positive 12 month readmission rate, and 30k with a negative, resulting in 60k samples for modeling. From these 60k samples, we used 80% for training data, and 20% for testing data.
+
+
+
+Our final reduced observation count of observations we used to build our datasets was 515k records. Of these records, 37k were admitted to a hospital within 12 months of the "as-of" date. 21k were admitted within 6 months, 12k were admitted within 3 months, and 4.5k were admitted within one month. Summary graphs of the data are included below.
+
+![Screenshot](outcome_counts_sample.png)
+
+![Screenshot](outcome_counts_total.png)
+
+
 
 
 ### Modeling Method:
@@ -145,6 +177,7 @@ For each dataset, we originally used the complete dataset of 500k rows to build 
 #### Temporal Modeling
 
 We ran two iterations of a model, one for the non-temporal dataset, and one for the temporal dataset. In these models, we made predictions against the range of response variables, readmission within 1, 3, 6, and 12 months. In both of the models, we used a logistic classification model.
+
 
 #### Performance Modeling
 
@@ -171,7 +204,6 @@ Below are ROC plots, one for each of the four response variable timeframes. Whil
 
 
 ![Screenshot](feature_roc.png)
-
 
 
 ### Perforamance Modelding
