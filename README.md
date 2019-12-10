@@ -6,9 +6,9 @@ Authors: Nick Tyler, Philip Johnson
 
 ### Background
 
-In todays world their is a vast amount of data collected in the healthcare industry after the introduction of electronic health records and the introduction and use of service payment systems that health insurers use to pay providers of care. At every point of care - from a primary care doctor visit to an ER visit to each medication presecription fill at the pharmacy - a data point is collected and stored in d datawarehouse.  With the cost of data storage decreasing dramatically, we now have the ability to store all of this data for use in many different ways. 
+In todays world their is a vast amount of data collected in the healthcare industry after the introduction of electronic health records and the introduction and use of service payment systems that health insurers use to pay providers of care. At every point of care - from a primary care doctor visit to an ER visit to each medication presecription fill at the pharmacy - a data point is collected and stored in a datawarehouse.  With the cost of data storage decreasing dramatically, we now have the ability to store all of this data for use in many different ways. 
 
-Healthcare insurers and providers can leverage all of this data and predictive models to proactively identify patients that are likely going to need extra care so that they can praoctively reach out to these patients prior to getting sicker. The healthcare industry leverages these models to predict things like which patients are likely to end up needing the ER and which patients are likely going to progress in severity of the conditions that they have.
+Healthcare insurers and providers can leverage this data and predictive models to proactively identify patients that are likely going to need extra care so that they can praoctively reach out to these patients prior to getting sicker. The healthcare industry leverages these models to predict things like which patients are likely to end up needing the ER and which patients are likely going to progress in severity of the conditions that they have.
 
 For our project, we were able to secure access to a Medicare based claims dataset to analyze and use to predict future hospital admissions. The dataset includes historical patient data that we can use to build features that look at prior history of patients to predict future outcomes. We sought out to leverage this data in differnet ways to try and improve predictive capabilities. Our first priority was to try and build features that would leverage this data in the best way to improve modeling. Because we had historical data, our first goal was to leverage the temporal nature of this data to build features that took into account recency of prior medical history in the hopes that features that account for this would improve models. By example, does a feature that describes that a patient had an ER visit in the last 6 months or a feature that descibes that the patient had an ER visit 2 months ago produce better results in modeling.
 
@@ -26,7 +26,7 @@ For our project, we were able to secure access to a Medicare based claims datase
 
 Overall we found reasonable evidence that adding temporal features to a previously non-temporal data set can help improve modeling outcomes of admission predictions. We looked at several time frames for features within the training data, as well as several timeframes for the response variable of "admitted to hospital within x months". The timeframes we used were 12, 6, 3, and 1 months. We then compared this to the non-temporal version of the model dataset, containing only one of the flags for the feature variables, being the 12 month timeframe feature variables. We found that especially for the prediction of outcomes over a shorter timespan (1 or 3 months), there is strong evidence to suggest that adding in multiple features to create a dataset with temporal characteristics resulted in improved outcomes for the model over a range of measurements. We found model accuracy and AUC scores to be improved in models across all timeframes. We also found these improved differences to be statistically significant at the .05 level when predicting admission within 1 or 3 months. 
 
-After leveraging the temporal feature dataset and a number of different types of ML aglorithms, we were able to achieve quite goood model resutls for predicting 6 month future admissions. We found that a Gradient Boosting algorithm achieved the best results for us, giving us a final AUC of .84 and an accuracy of .95. For this type of outcome modeling, we are really the most interested in how well we can predict for the highest risk patient in the population - so a few other metrics are actually a bit more intersting in assessing model performance.
+After leveraging the temporal feature dataset and a number of different types of ML aglorithms, we were able to achieve quite goood model resutls for predicting 6 month future admissions. We found that a Gradient Boosting algorithm achieved the best results for us, giving us a final AUC of .84 and an accuracy of .95. For this type of outcome modeling, we are really the most interested in how well we can predict for the highest risk patient in the population - so a few other metrics are actually a bit more intersting in assessing model performance and described below. At a high level, we were able to prove that with with the top 10% of the high risk patients, we were able to capture 45% of all admissions and these patients had an average admission rate 5 times greater than the average of the population.
 
 - Rate 10 (average outcome rate of the top 10% of the population): 25%
 - Coverage (percent of total admissions identified when looking at the top 10% of high risk patients): 45%
@@ -96,7 +96,7 @@ This data was already in the form of one line per patient so no transformation w
 
 Event Data
 
-This data source was structured as a one line per visit dataset, meaning that a single patient may have multiple lines containing data relevant to our analysisn. This data was collapsed down into indicator features which were one hot encoded. This included features such as ER visits within the last 12, 6, 3, and 1 months. We performed similar tranformation on PCP visits and inpatient admissions.
+This data source was structured as a one line per visit dataset, meaning that a single patient may have multiple lines containing data relevant to our analysis. This data was collapsed down into indicator features which were one hot encoded. This included features such as ER visits within the last 12, 6, 3, and 1 months. We performed similar tranformation on PCP visits and inpatient admissions.
 
 Patient Medication Data
 
@@ -113,7 +113,7 @@ The chart below shows the prevelance of common chronic conditions within the pop
 
 Model Data 
 
-In order to create the dataset for modeling, we merged all of the different datasets into a single record for a patient, creating a unqiue record per patient with each column being a developed feature. This process allowed us to send the data into the feature imporatnce algorithnm as well as the ML algos across multiple outcome types. The diagram below shows how we leveraged the different data sources to create a single patient record:
+In order to create the dataset for modeling, we merged all of the different datasets into a single record for a patient, creating a unqiue record per patient with each column being a developed feature. This process allowed us to send the data into the feature importance algorithnm as well as the ML algos across multiple outcome types. The diagram below shows how we leveraged the different data sources to create a single patient record:
 
 ![Screenshot](data_merge.png)
 
@@ -135,9 +135,9 @@ The temporal dataset contains all of the same features as the non-temporal datas
 
 Outcome Definition
 
-For this project, our outcome variable for predictions is future a avoidable admissions. An 'avoidable' admission is defined as an admission that was not pre-planned or random. Pre-planned events are things like planned surgeries and pregnancies. Random events are things like trauma related events or accidents. It is very important in distinguishing between these event types as it does not make business sense to try and predict random events and it is not possibnle to predict planned surgeries given the nature of the event. 
+For this project, our outcome variable for predictions is future avoidable admissions. An 'avoidable' admission is defined as an admission that was not pre-planned or random. Pre-planned events are things like planned surgeries and pregnancies. Random events are things like trauma related events or accidents. It is very important in distinguishing between these event types as it does not make business sense to try and predict random events and it is not possible to predict planned surgeries given the nature of the event. 
 
-The diagram below walks through an example patient timeline in which we can create fefatures from. We sbasically draw a line in time and call it the 'as of date' which becomes the point in which we base prior history on and future outcomes. In this example, our 'as of date' is January of 2018 - so historical features are constructed by looking at patient medical history prior to January 2018 and the outcome is based off of admissions that occured post January 2018. 
+The diagram below walks through an example patient timeline in which we can create features from. We basically draw a line in time and call it the 'as of date' which becomes the point in which we base prior history and future outcomes. In this example, our 'as of date' is January of 2018 - so historical features are constructed by looking at patient medical history prior to January 2018 and the outcome is based off of admissions that occured post January 2018. 
 
 We see that this patient would be a positive instance in the training dataset because the patient had an 'avoidable' admission after the defined 'as of date':
 
@@ -213,7 +213,7 @@ Below are ROC plots, one for each of the four response variable timeframes. Whil
 ![Screenshot](feature_roc.png)
 
 
-### Perforamance Modelding
+### Performance Modeling
 
 #### ROC
 
@@ -229,13 +229,13 @@ The Precision Recall curve below shows a similar curve for Logistic Regression a
 
 #### Rate 10, Converage, and Lift
 
-For the following metrics, we bin the testing data in 10 equal sized bins ordering by the predicted probablity value of an admission creating a bin for each 10% of the population. We then focus on the top bin (top 10% at risk patients) to calaculate the metrics below. These are nice metrics for this type of problem given the biased nature of the outcome as well as th fact that healthcare providers only have the ability to target limited number of patients. 
+For the following metrics, we bin the testing data in 10 equal sized bins ordering by the predicted probablity value of an admission creating a bin for each 10% of the population. We then focus on the top bin (top 10% at risk patients) to calculate the metrics below. These are nice metrics for this type of problem given the biased nature of the outcome as well as the fact that healthcare providers only have the ability to target limited number of patients. 
 
 Rate 10 describes the average number of admissions within the 10% of high risk patients: 25%
 
 Coverage describes the percent of total admissions identified when looking at the top 10% of high risk patients: 45%
 
-Lift gives us a way to compare how well we do at predicting high risk patients as compared to the rest of the population. In this example, we are comparing average outcome actual of the top 10% of high risk patients to the average outcome of the entire population to identify how much 'lift' we get when using our model versus identifying patients at random. The average outcome rate of the top 10% of patients (Rate 10) is 25% whereas the average outcome of the entire population is 5%. So targeting the top 10% of patients would yield a 1 in 5 chance of targeting a patient who will have a hosptial admisiosn versus on average 1 in 20 patients will have a hospital admission. In this case, we achieve a lift of 5x.
+Lift gives us a way to compare how well we do at predicting high risk patients as compared to the rest of the population. In this example, we are comparing average outcome actual of the top 10% of high risk patients to the average outcome of the entire population to identify how much 'lift' we get when using our model versus identifying patients at random. The average outcome rate of the top 10% of patients (Rate 10) is 25% whereas the average outcome of the entire population is 5%. So targeting the top 10% of patients would yield a 1 in 5 chance of targeting a patient who will have a hosptial admission versus on average 1 in 20 patients will have a hospital admission. In this case, we achieve a lift of 5x.
 
 ![Screenshot](lift_results.png)
 
@@ -244,14 +244,14 @@ Lift gives us a way to compare how well we do at predicting high risk patients a
 
 Through the work of this project, we have successfully shown that the use of temporal features can improve the modleing process and in the end provide more accurate predictions on which patients will be at risk of needing future hospital care. The information can be used to better inform feature development in the modeling process within the healthacre industry to help build better and more relevant features. It can be important to keep in mind ways of leveraging the temporal nature of the data into features that take into account recency of patient behavior. 
 
-The next step of this type of work would be to also leverage severity as a way of improving feature enhancement. Just like the temporal nature of medical history information, their is also an inherent serverity nature of the data. We could leverage the data to identify how severe recent patient history is, not just a generic interpretation of what has happened. By example, we could use diagnosis information to give more insight into recent patient history, tagging events with a serverity value. An ER visit for severe asthma is likely a better predicting of future poor outcomes than an ER visit for the flu. We could leverage this information to give more context and relevance around the historical events that we create for a patient.
+The next step of this type of work would be to also leverage severity as a way of improving feature enhancement. Just like the temporal nature of medical history information, their is also an inherent serverity nature of the data. We could leverage the data to identify how severe recent patient history is, not just a generic interpretation of what has happened. By example, we could use diagnosis information to give more insight into recent patient history, tagging events with a serverity value. An ER visit for severe asthma is likely a better predictor of future poor outcomes than an ER visit for the flu. We could leverage this information to give more context and relevance around the historical events that we create for a patient.
 
 Overall, we are happy with the results achieved and glad we could succeed in achieving the goals we set out to accomplish. Our final performance modeling scores are actually farily comprable to performance you can find in published papers that attempt to solve similar problems. 
 
 
 ## Contributions
 
-Both members of the group contributed equally to the project. Phil Johnson has acted as the point of contact between the group and the interested company, as well as contributed to the data modeling and transformation pieces. Nick Tyler has also contributed during the data transformation steps in addition to the modeling. Both members contributed equally to the report.
+Both members of the group contributed equally to the project. Both spent a significant amnount of time thinking through and developing the features used in modeling as well as writing the final code for developing and assessing modeling. Both team members also spent significant time working through the project presentation deck and preparing for the presentation.
 
 
 ## Appendix
